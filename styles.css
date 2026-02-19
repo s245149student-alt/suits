@@ -1,3 +1,15 @@
 body {
   background-color: lightblue;
 }
+
+h1 {
+  text-align: center;
+}
+
+img {
+  border: 3px solid black;
+}
+
+p {
+  padding: 20px;
+}
