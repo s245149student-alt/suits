@@ -1,15 +1,254 @@
-body {
-  background-color: lightblue;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-h1 {
-  text-align: center;
+body {
+  font-family: Georgia, "Times New Roman", serif;
+  background-color: #f7f4ef;
+  color: #1f1f1f;
+  line-height: 1.6;
 }
 
 img {
-  border: 3px solid black;
+  width: 100%;
+  display: block;
 }
 
-p {
-  padding: 20px;
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px 60px;
+  background-color: #111111;
+  color: #f5f1e8;
+}
+
+.logo {
+  font-size: 1.4rem;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 24px;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: #f5f1e8;
+  font-size: 0.95rem;
+}
+
+.nav-links a:hover {
+  color: #c7a86b;
+}
+
+.hero {
+  min-height: 85vh;
+  background-image: linear-gradient(rgba(17, 17, 17, 0.45), rgba(17, 17, 17, 0.45)),
+    url("https://images.unsplash.com/photo-1617127365659-c47fa864d8bc?auto=format&fit=crop&w=1600&q=80");
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  padding: 60px;
+  color: white;
+}
+
+.hero-content {
+  max-width: 650px;
+}
+
+.eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-size: 0.85rem;
+  margin-bottom: 12px;
+  color: #d8c3a0;
+}
+
+.hero h1 {
+  font-size: 3.4rem;
+  line-height: 1.1;
+  margin-bottom: 20px;
+}
+
+.hero p {
+  font-size: 1.1rem;
+  margin-bottom: 24px;
+  max-width: 560px;
+}
+
+.hero-buttons {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.btn {
+  display: inline-block;
+  padding: 12px 22px;
+  text-decoration: none;
+  border-radius: 4px;
+  font-size: 0.95rem;
+  transition: 0.2s ease;
+}
+
+.btn-primary {
+  background-color: #c7a86b;
+  color: #111111;
+}
+
+.btn-primary:hover {
+  background-color: #b39256;
+}
+
+.btn-secondary {
+  border: 1px solid white;
+  color: white;
+}
+
+.btn-secondary:hover {
+  background-color: rgba(255, 255, 255, 0.12);
+}
+
+.intro,
+.products,
+.fit-guide,
+.story,
+.benefits {
+  padding: 80px 60px;
+}
+
+.intro-text,
+.story-text,
+.fit-box {
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.intro h2,
+.products h2,
+.fit-guide h2,
+.story h2 {
+  font-size: 2.2rem;
+  margin-bottom: 18px;
+}
+
+.products h2 {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 28px;
+}
+
+.product-card {
+  background-color: white;
+  border: 1px solid #e5dfd4;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+}
+
+.product-card h3 {
+  font-size: 1.3rem;
+  margin: 18px 18px 8px;
+}
+
+.product-description {
+  margin: 0 18px 12px;
+  color: #555;
+}
+
+.price {
+  margin: 0 18px 18px;
+  font-weight: bold;
+  color: #111;
+}
+
+.product-card button {
+  margin: 0 18px 20px;
+  padding: 10px 18px;
+  border: none;
+  background-color: #111111;
+  color: white;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.product-card button:hover {
+  background-color: #333333;
+}
+
+.fit-guide {
+  background-color: #ede7dd;
+}
+
+.fit-box ul {
+  list-style-position: inside;
+  margin: 20px 0 28px;
+}
+
+.benefits {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 24px;
+  background-color: #111111;
+  color: #f5f1e8;
+}
+
+.benefit {
+  padding: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.benefit h3 {
+  margin-bottom: 12px;
+  color: #d8c3a0;
+}
+
+.footer {
+  text-align: center;
+  padding: 40px 20px;
+  background-color: #0b0b0b;
+  color: #d7d0c5;
+}
+
+@media (max-width: 768px) {
+  .topbar {
+    flex-direction: column;
+    gap: 18px;
+    padding: 20px;
+  }
+
+  .nav-links {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .hero {
+    padding: 30px 20px;
+    min-height: 70vh;
+  }
+
+  .hero h1 {
+    font-size: 2.3rem;
+  }
+
+  .intro,
+  .products,
+  .fit-guide,
+  .story,
+  .benefits {
+    padding: 60px 20px;
+  }
 }
