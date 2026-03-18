@@ -1,47 +1,125 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <title>Suits</title>
-    <link rel="stylesheet" href="styles.css">
-  </head>
-  
-  <body>
-    <main>
-      <h1>Suits</h1>
-      <section>
-        <h2>Suit Photos</h2>
-        <p>Everyone loves <a href="https://www.bondsuits.com/wp-content/uploads/2024/08/Casino-Royale-Navy-Pinstripe-Three-Piece-Suit-3.jpg">a good suits</a> online!</p>
-        <p>See more <a target="_blank" href="https://freecatphotoapp.com">sweet suits</a> in our gallery.</p>
-        <a href="https://freecatphotoapp.com"><img src="https://www.bondsuits.com/wp-content/uploads/2024/08/Casino-Royale-Navy-Pinstripe-Three-Piece-Suit-3.jpg" alt="A cute orange cat lying on its back."></a>
-      </section>
-      <section>
-        <h2>Suits</h2>
-        <h3>Things men love:</h3>
-        <ul>
-          <li>catnip</li>
-          <li>suits</li>
-          <li>lasagna</li>
-        </ul>
-        <figure>
-          <img src="https://cdn.shopify.com/s/files/1/0553/0252/1011/files/james-bond-wears_480x480.jpg?v=1626260718" alt="A slice of lasagna on a plate.">
-          <figcaption>Cats <em>love</em> lasagna.</figcaption>  
-        </figure>
-        <h3>Top 3 things cats hate:</h3>
-        <ol>
-          <li>flea treatment</li>
-          <li>thunder</li>
-          <li>other cats</li>
-        </ol>
-        <figure>
-          <img src="https://cdn.freecodecamp.org/curriculum/cat-photo-app/cats.jpg" alt="Two tabby kittens sleeping together on a couch.">
-          <figcaption>Cats <strong>hate</strong> other cats.</figcaption>  
-        </figure>
-      </section>
-    </main>
-    <footer>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nordisk Sartoria</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="logo">Nordisk Sartoria</div>
+    <nav>
+      <ul class="nav-links">
+        <li><a href="#collection">Collection</a></li>
+        <li><a href="#fit-guide">Fit Guide</a></li>
+        <li><a href="#story">Our Story</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <div class="hero-content">
+      <p class="eyebrow">Italian craftsmanship. Scandinavian simplicity.</p>
+      <h1>Timeless Italian Suits for the Modern Gentleman</h1>
       <p>
-        No Copyright - <a href="https://www.freecodecamp.org">freeCodeCamp.org</a>
+        Discover premium Italian suits designed with sharp tailoring,
+        refined fabrics, and effortless elegance.
       </p>
-    </footer>
-  </body>
+      <div class="hero-buttons">
+        <a href="#collection" class="btn btn-primary">Shop Suits</a>
+        <a href="#fit-guide" class="btn btn-secondary">Find Your Fit</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="intro">
+    <div class="intro-text">
+      <h2>Confidence starts with the right suit</h2>
+      <p>
+        Buying a suit online can feel uncertain. Nordisk Sartoria makes it easier
+        with clear guidance, premium materials, and a focused selection of
+        Italian tailoring with a Scandinavian touch.
+      </p>
+    </div>
+  </section>
+
+  <section id="collection" class="products">
+    <h2>Featured Collection</h2>
+    <div class="product-grid">
+      <article class="product-card">
+        <img src="https://images.unsplash.com/photo-1593032465171-8bd6b1b0b1c5?auto=format&fit=crop&w=900&q=80" alt="Navy Italian suit">
+        <h3>Milano Navy Suit</h3>
+        <p class="product-description">Slim fit, wool blend, ideal for business and formal occasions.</p>
+        <p class="price">3.499 DKK</p>
+        <button>View Product</button>
+      </article>
+
+      <article class="product-card">
+        <img src="https://images.unsplash.com/photo-1617127365659-c47fa864d8bc?auto=format&fit=crop&w=900&q=80" alt="Charcoal Italian suit">
+        <h3>Torino Charcoal Suit</h3>
+        <p class="product-description">Classic tailored silhouette with a soft structured shoulder.</p>
+        <p class="price">3.799 DKK</p>
+        <button>View Product</button>
+      </article>
+
+      <article class="product-card">
+        <img src="https://images.unsplash.com/photo-1594938328870-9623159c8c99?auto=format&fit=crop&w=900&q=80" alt="Beige Italian suit">
+        <h3>Como Sand Suit</h3>
+        <p class="product-description">Lightweight suit in breathable fabric for spring and summer events.</p>
+        <p class="price">3.299 DKK</p>
+        <button>View Product</button>
+      </article>
+    </div>
+  </section>
+
+  <section id="fit-guide" class="fit-guide">
+    <div class="fit-box">
+      <h2>Fit Guide</h2>
+      <p>
+        Not sure where to start? Use our fit guide to compare body shape,
+        preferred silhouette, and size recommendations before you buy.
+      </p>
+      <ul>
+        <li>Understand slim, regular, and tailored fit</li>
+        <li>See body-shape based recommendations</li>
+        <li>Get help choosing the right size</li>
+      </ul>
+      <a href="#" class="btn btn-primary">Open Fit Assistant</a>
+    </div>
+  </section>
+
+  <section id="story" class="story">
+    <div class="story-text">
+      <h2>Our Story</h2>
+      <p>
+        Nordisk Sartoria brings together the heritage of Italian tailoring and
+        the calm functionality of Scandinavian design. We focus on fewer,
+        better pieces that feel refined, durable, and wearable for years.
+      </p>
+    </div>
+  </section>
+
+  <section class="benefits">
+    <div class="benefit">
+      <h3>Premium Fabrics</h3>
+      <p>Selected materials chosen for comfort, structure, and longevity.</p>
+    </div>
+    <div class="benefit">
+      <h3>Clear Guidance</h3>
+      <p>Detailed fit and product information that reduces uncertainty.</p>
+    </div>
+    <div class="benefit">
+      <h3>Easy Experience</h3>
+      <p>Simple browsing, clean navigation, and a smooth purchase flow.</p>
+    </div>
+  </section>
+
+  <footer id="contact" class="footer">
+    <p><strong>Nordisk Sartoria</strong></p>
+    <p>Copenhagen, Denmark</p>
+    <p>Email: contact@nordisksartoria.dk</p>
+  </footer>
+</body>
 </html>
