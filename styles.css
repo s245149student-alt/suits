@@ -50,7 +50,7 @@ img {
 .hero {
   min-height: 85vh;
   background-image: linear-gradient(rgba(17, 17, 17, 0.45), rgba(17, 17, 17, 0.45)),
-    url("https://images.unsplash.com/photo-1617127365659-c47fa864d8bc?auto=format&fit=crop&w=1600&q=80");
+    url("https://cdn.thewirecutter.com/wp-content/media/2025/09/BEST-MENS-SUITS-SUB-2048px-6944-2x1-1.jpg?width=2048&quality=75&crop=2:1&auto=webp");
   background-size: cover;
   background-position: center;
   display: flex;
