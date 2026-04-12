@@ -123,5 +123,24 @@
     <p>Copenhagen, Denmark</p>
     <p>Email: contact@nordisksartoria.dk</p>
   </footer>
+
+  <div id="loginModal" class="modal">
+  <div class="modal-content">
+    <span class="close-btn" id="closeModal">&times;</span>
+    <h2>Login</h2>
+    <form id="loginForm">
+      <label for="email">Email</label>
+      <input type="email" id="email" placeholder="Enter your email" required>
+
+      <label for="password">Password</label>
+      <input type="password" id="password" placeholder="Enter your password" required>
+
+      <button type="submit" class="btn btn-primary login-submit">Log In</button>
+      <p id="loginMessage"></p>
+    </form>
+  </div>
+</div>
+
+<script src="script.js"></script>
 </body>
 </html>
