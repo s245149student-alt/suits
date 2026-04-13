@@ -124,23 +124,37 @@
     <p>Email: contact@nordisksartoria.dk</p>
   </footer>
 
-  <div id="loginModal" class="modal">
+<div id="authModal" class="modal">
   <div class="modal-content">
-    <span class="close-btn" id="closeModal">&times;</span>
-    <h2>Login</h2>
-    <form id="loginForm">
-      <label for="email">Email</label>
-      <input type="email" id="email" placeholder="Enter your email" required>
+    <span class="close-btn" id="closeAuth">&times;</span>
+    <h2>Account</h2>
 
-      <label for="password">Password</label>
-      <input type="password" id="password" placeholder="Enter your password" required>
+    <form id="signupForm" class="auth-form">
+      <h3>Create account</h3>
+      <label for="signupEmail">Email</label>
+      <input type="email" id="signupEmail" required>
 
-      <button type="submit" class="btn btn-primary login-submit">Log In</button>
-      <p id="loginMessage"></p>
+      <label for="signupPassword">Password</label>
+      <input type="password" id="signupPassword" minlength="6" required>
+
+      <button type="submit" class="btn btn-primary login-submit">Sign up</button>
     </form>
+
+    <form id="loginForm" class="auth-form">
+      <h3>Log in</h3>
+      <label for="loginEmail">Email</label>
+      <input type="email" id="loginEmail" required>
+
+      <label for="loginPassword">Password</label>
+      <input type="password" id="loginPassword" required>
+
+      <button type="submit" class="btn btn-primary login-submit">Log in</button>
+    </form>
+
+    <p id="authMessage"></p>
   </div>
 </div>
 
-<script src="script.js"></script>
+<script type="module" src="script.js"></script>
 </body>
 </html>
