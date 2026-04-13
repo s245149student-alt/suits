@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cart | Nordisk Sartoria</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="logo"><a href="index.html" style="color:inherit;text-decoration:none;">Nordisk Sartoria</a></div>
+    <nav>
+      <ul class="nav-links">
+        <li><a href="index.html#collection">Collection</a></li>
+        <li><a href="account.html">Account</a></li>
+        <li><a href="cart.html">Cart</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="page-container two-col">
+    <section class="card">
+      <h1>Your Cart</h1>
+      <ul id="cartList" class="list-clean"></ul>
+    </section>
+
+    <aside class="card">
+      <h2>Summary</h2>
+      <p id="cartTotal" class="price">0 DKK</p>
+      <button id="checkoutBtn" class="btn-dark">Submit Order</button>
+      <p id="cartMessage" class="space-top"></p>
+    </aside>
+  </main>
+
+  <script type="module">
+    import { supabase, getCurrentUser, formatPrice } from './script.js';
+
+    const cartList = document.getElementById('cartList');
+    const cartTotal = document.getElementById('cartTotal');
+    const cartMessage = document.getElementById('cartMessage');
+    const checkoutBtn = document.getElementById('checkoutBtn');
+
+    let currentItems = [];
+
+    async function loadCart() {
+      const user = await getCurrentUser();
+      if (!user) {
+        cartList.innerHTML = '<li>You must log in to see your cart.</li>';
+        checkoutBtn.disabled = true;
+        return;
+      }
+
+      const { data, error } = await supabase
+        .from('cart_items')
+        .select('id, quantity, product:products(id, name, price)')
+        .eq('user_id', user.id);
+
+      if (error) {
+        cartList.innerHTML = `<li>${error.message}</li>`;
+        return;
+      }
+
+      currentItems = data ?? [];
+
+      if (!currentItems.length) {
+        cartList.innerHTML = '<li>Your cart is empty.</li>';
+        cartTotal.textContent = '0 DKK';
+        return;
+      }
+
+      let total = 0;
+      cartList.innerHTML = currentItems.map((item) => {
+        const line = item.quantity * item.product.price;
+        total += line;
+        return `
+          <li>
+            <strong>${item.product.name}</strong><br>
+            Qty: ${item.quantity} — ${formatPrice(line)}
+            <div class="inline-row space-top">
+              <button class="btn-dark remove-btn" data-id="${item.id}">Remove</button>
+            </div>
+          </li>
+        `;
+      }).join('');
+
+      cartTotal.textContent = formatPrice(total);
+
+      document.querySelectorAll('.remove-btn').forEach((btn) => {
+        btn.addEventListener('click', async () => {
+          await supabase.from('cart_items').delete().eq('id', btn.dataset.id);
+          loadCart();
+        });
+      });
+    }
+
+    checkoutBtn.addEventListener('click', async () => {
+      const user = await getCurrentUser();
+      if (!user || !currentItems.length) return;
+
+      const totalAmount = currentItems.reduce((sum, item) => sum + item.quantity * item.product.price, 0);
+
+      const { data: order, error: orderError } = await supabase
+        .from('orders')
+        .insert({ user_id: user.id, total_amount: totalAmount })
+        .select()
+        .single();
+
+      if (orderError) {
+        cartMessage.textContent = orderError.message;
+        cartMessage.style.color = '#9b1c1c';
+        return;
+      }
+
+      const orderRows = currentItems.map((item) => ({
+        order_id: order.id,
+        product_id: item.product.id,
+        quantity: item.quantity,
+        unit_price: item.product.price
+      }));
+
+      const { error: itemsError } = await supabase.from('order_items').insert(orderRows);
+      if (itemsError) {
+        cartMessage.textContent = itemsError.message;
+        cartMessage.style.color = '#9b1c1c';
+        return;
+      }
+
+      await supabase.from('cart_items').delete().eq('user_id', user.id);
+      cartMessage.textContent = 'Order submitted successfully.';
+      cartMessage.style.color = 'green';
+      loadCart();
+    });
+
+    loadCart();
+  </script>
+</body>
+</html>
