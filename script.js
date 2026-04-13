@@ -1,66 +1,148 @@
-const loginBtn = document.getElementById("loginBtn");
+import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
+
+const supabaseUrl = "DIN_SUPABASE_URL";
+const supabaseAnonKey = "DIN_SUPABASE_ANON_KEY";
+
+const supabase = createClient(supabaseUrl, supabaseAnonKey);
+
+const openAuth = document.getElementById("openAuth");
 const logoutBtn = document.getElementById("logoutBtn");
-const loginModal = document.getElementById("loginModal");
-const closeModal = document.getElementById("closeModal");
+const authModal = document.getElementById("authModal");
+const closeAuth = document.getElementById("closeAuth");
+const authMessage = document.getElementById("authMessage");
+
+const signupForm = document.getElementById("signupForm");
 const loginForm = document.getElementById("loginForm");
-const loginMessage = document.getElementById("loginMessage");
 const protectedButtons = document.querySelectorAll(".protected-btn");
 
-const DEMO_EMAIL = "test@nordisk.dk";
-const DEMO_PASSWORD = "1234";
-
-function isLoggedIn() {
-  return localStorage.getItem("loggedIn") === "true";
+function setMessage(message, isError = false) {
+  authMessage.textContent = message;
+  authMessage.style.color = isError ? "#9b1c1c" : "green";
 }
 
-function updateUI() {
-  if (isLoggedIn()) {
-    loginBtn.style.display = "none";
+async function getCurrentUser() {
+  const { data, error } = await supabase.auth.getUser();
+  if (error) {
+    return null;
+  }
+  return data.user;
+}
+
+async function updateUI() {
+  const user = await getCurrentUser();
+
+  if (user) {
+    openAuth.style.display = "none";
     logoutBtn.style.display = "inline-block";
 
     protectedButtons.forEach((button) => {
-      button.classList.remove("disabled");
-      button.disabled = false;
+      button.classList.remove("locked");
       button.textContent = "View Product";
     });
   } else {
-    loginBtn.style.display = "inline-block";
+    openAuth.style.display = "inline-block";
     logoutBtn.style.display = "none";
 
     protectedButtons.forEach((button) => {
-      button.classList.add("disabled");
-      button.disabled = false;
+      button.classList.add("locked");
       button.textContent = "Login to View";
     });
   }
 }
 
-loginBtn.addEventListener("click", (e) => {
+openAuth.addEventListener("click", (e) => {
   e.preventDefault();
-  loginModal.style.display = "flex";
+  authModal.style.display = "flex";
+  setMessage("");
 });
 
-closeModal.addEventListener("click", () => {
-  loginModal.style.display = "none";
-  loginMessage.textContent = "";
+closeAuth.addEventListener("click", () => {
+  authModal.style.display = "none";
+  setMessage("");
 });
 
 window.addEventListener("click", (e) => {
-  if (e.target === loginModal) {
-    loginModal.style.display = "none";
-    loginMessage.textContent = "";
+  if (e.target === authModal) {
+    authModal.style.display = "none";
+    setMessage("");
   }
 });
 
-loginForm.addEventListener("submit", (e) => {
+signupForm.addEventListener("submit", async (e) => {
   e.preventDefault();
 
-  const email = document.getElementById("email").value.trim();
-  const password = document.getElementById("password").value.trim();
+  const email = document.getElementById("signupEmail").value.trim();
+  const password = document.getElementById("signupPassword").value.trim();
 
-  if (email === DEMO_EMAIL && password === DEMO_PASSWORD) {
-    localStorage.setItem("loggedIn", "true");
-    loginMessage.style.color = "green";
+  const { error } = await supabase.auth.signUp({
+    email,
+    password
+  });
+
+  if (error) {
+    setMessage(error.message, true);
+    return;
+  }
+
+  setMessage("Account created. Check your email if confirmation is enabled.");
+  signupForm.reset();
+});
+
+loginForm.addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  const email = document.getElementById("loginEmail").value.trim();
+  const password = document.getElementById("loginPassword").value.trim();
+
+  const { error } = await supabase.auth.signInWithPassword({
+    email,
+    password
+  });
+
+  if (error) {
+    setMessage(error.message, true);
+    return;
+  }
+
+  setMessage("Logged in successfully.");
+  loginForm.reset();
+  authModal.style.display = "none";
+  await updateUI();
+});
+
+logoutBtn.addEventListener("click", async (e) => {
+  e.preventDefault();
+
+  const { error } = await supabase.auth.signOut();
+
+  if (error) {
+    setMessage(error.message, true);
+    return;
+  }
+
+  await updateUI();
+});
+
+protectedButtons.forEach((button) => {
+  button.addEventListener("click", async (e) => {
+    const user = await getCurrentUser();
+
+    if (!user) {
+      e.preventDefault();
+      authModal.style.display = "flex";
+      setMessage("You must log in first.", true);
+      return;
+    }
+
+    alert("Open product page here.");
+  });
+});
+
+supabase.auth.onAuthStateChange(async () => {
+  await updateUI();
+});
+
+await updateUI();    loginMessage.style.color = "green";
     loginMessage.textContent = "Login successful.";
 
     setTimeout(() => {
