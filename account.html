@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Account | Nordisk Sartoria</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="logo"><a href="index.html" style="color:inherit;text-decoration:none;">Nordisk Sartoria</a></div>
+    <nav>
+      <ul class="nav-links">
+        <li><a href="index.html#collection">Collection</a></li>
+        <li><a href="account.html">Account</a></li>
+        <li><a href="cart.html">Cart</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="page-container two-col">
+    <section class="card">
+      <h1>My Account</h1>
+      <form id="profileForm">
+        <div class="form-group">
+          <label for="fullName">Full name</label>
+          <input type="text" id="fullName">
+        </div>
+        <div class="form-group">
+          <label for="phone">Phone</label>
+          <input type="text" id="phone">
+        </div>
+        <button class="btn-dark" type="submit">Save Profile</button>
+        <p id="profileMessage" class="space-top"></p>
+      </form>
+    </section>
+
+    <aside class="card">
+      <h2>My Orders</h2>
+      <ul id="ordersList" class="list-clean"></ul>
+    </aside>
+  </main>
+
+  <script type="module">
+    import { supabase, getCurrentUser, formatPrice } from './script.js';
+
+    const profileForm = document.getElementById('profileForm');
+    const fullName = document.getElementById('fullName');
+    const phone = document.getElementById('phone');
+    const profileMessage = document.getElementById('profileMessage');
+    const ordersList = document.getElementById('ordersList');
+
+    async function loadProfile() {
+      const user = await getCurrentUser();
+      if (!user) {
+        profileMessage.textContent = 'You must log in first.';
+        profileMessage.style.color = '#9b1c1c';
+        return;
+      }
+
+      const { data: profile } = await supabase
+        .from('profiles')
+        .select('*')
+        .eq('id', user.id)
+        .maybeSingle();
+
+      if (profile) {
+        fullName.value = profile.full_name ?? '';
+        phone.value = profile.phone ?? '';
+      }
+
+      const { data: orders } = await supabase
+        .from('orders')
+        .select('*')
+        .eq('user_id', user.id)
+        .order('created_at', { ascending: false });
+
+      if (!orders?.length) {
+        ordersList.innerHTML = '<li>No orders yet.</li>';
+      } else {
+        ordersList.innerHTML = orders.map((order) => `
+          <li>
+            <strong>Order #${order.id}</strong><br>
+            ${formatPrice(order.total_amount)} — ${order.status}
+          </li>
+        `).join('');
+      }
+    }
+
+    profileForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const user = await getCurrentUser();
+      if (!user) return;
+
+      const { error } = await supabase.from('profiles').upsert({
+        id: user.id,
+        full_name: fullName.value.trim(),
+        phone: phone.value.trim()
+      });
+
+      if (error) {
+        profileMessage.textContent = error.message;
+        profileMessage.style.color = '#9b1c1c';
+        return;
+      }
+
+      profileMessage.textContent = 'Profile updated.';
+      profileMessage.style.color = 'green';
+    });
+
+    loadProfile();
+  </script>
+</body>
+</html>
