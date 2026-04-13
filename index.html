@@ -7,19 +7,23 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-<header class="topbar">
-  <div class="logo">Nordisk Sartoria</div>
-  <nav>
-    <ul class="nav-links">
-      <li><a href="#collection">Collection</a></li>
-      <li><a href="#fit-guide">Fit Guide</a></li>
-      <li><a href="#story">Our Story</a></li>
-      <li><a href="#contact">Contact</a></li>
-      <li><a href="#" id="openAuth">Login</a></li>
-      <li><a href="#" id="logoutBtn" style="display: none;">Logout</a></li>
-    </ul>
-  </nav>
-</header>
+  <header class="topbar">
+    <div class="logo">
+      <a href="index.html" style="color: inherit; text-decoration: none;">Nordisk Sartoria</a>
+    </div>
+    <nav>
+      <ul class="nav-links">
+        <li><a href="#collection">Collection</a></li>
+        <li><a href="#fit-guide">Fit Guide</a></li>
+        <li><a href="#story">Our Story</a></li>
+        <li><a href="account.html">Account</a></li>
+        <li><a href="cart.html">Cart</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <li><a href="#" id="openAuth">Login</a></li>
+        <li><a href="#" id="logoutBtn" style="display: none;">Logout</a></li>
+      </ul>
+    </nav>
+  </header>
 
   <section class="hero">
     <div class="hero-content">
@@ -51,24 +55,113 @@
     <h2>Featured Collection</h2>
     <div class="product-grid">
       <article class="product-card">
-        <img src="https://xcdn.next.co.uk/common/items/default/default/itemimages/3_4Ratio/product/lge/Q76885s.jpg" alt="Suits">
+        <img src="https://xcdn.next.co.uk/common/items/default/default/itemimages/3_4Ratio/product/lge/Q76885s.jpg" alt="Milano Navy Suit">
         <h3>Milano Navy Suit</h3>
         <p class="product-description">Slim fit, wool blend, ideal for business and formal occasions.</p>
         <p class="price">3.499 DKK</p>
-        <button class="protected-btn">View Product</button>
+        <a href="product.html?slug=milano-navy-suit" class="product-link btn-dark">View Product</a>
       </article>
 
       <article class="product-card">
-        <img src="https://images.unsplash.com/photo-1617127365659-c47fa864d8bc?auto=format&fit=crop&w=900&q=80" alt="Charcoal Italian suit">
+        <img src="https://images.unsplash.com/photo-1617127365659-c47fa864d8bc?auto=format&fit=crop&w=900&q=80" alt="Torino Charcoal Suit">
         <h3>Torino Charcoal Suit</h3>
         <p class="product-description">Classic tailored silhouette with a soft structured shoulder.</p>
         <p class="price">3.799 DKK</p>
-        <button class="protected-btn">View Product</button>
+        <a href="product.html?slug=torino-charcoal-suit" class="product-link btn-dark">View Product</a>
       </article>
 
       <article class="product-card">
-        <img src="https://images.unsplash.com/photo-1594938328870-9623159c8c99?auto=format&fit=crop&w=900&q=80" alt="Beige Italian suit">
+        <img src="https://images.unsplash.com/photo-1594938328870-9623159c8c99?auto=format&fit=crop&w=900&q=80" alt="Como Sand Suit">
         <h3>Como Sand Suit</h3>
+        <p class="product-description">Lightweight suit in breathable fabric for spring and summer events.</p>
+        <p class="price">3.299 DKK</p>
+        <a href="product.html?slug=como-sand-suit" class="product-link btn-dark">View Product</a>
+      </article>
+    </div>
+  </section>
+
+  <section id="fit-guide" class="fit-guide">
+    <div class="fit-box">
+      <h2>Fit Guide</h2>
+      <p>
+        Not sure where to start? Use our fit guide to compare body shape,
+        preferred silhouette, and size recommendations before you buy.
+      </p>
+      <ul>
+        <li>Understand slim, regular, and tailored fit</li>
+        <li>See body-shape based recommendations</li>
+        <li>Get help choosing the right size</li>
+      </ul>
+      <a href="account.html" class="btn btn-primary">Open Fit Assistant</a>
+    </div>
+  </section>
+
+  <section id="story" class="story">
+    <div class="story-text">
+      <h2>Our Story</h2>
+      <p>
+        Nordisk Sartoria brings together the heritage of Italian tailoring and
+        the calm functionality of Scandinavian design. We focus on fewer,
+        better pieces that feel refined, durable, and wearable for years.
+      </p>
+    </div>
+  </section>
+
+  <section class="benefits">
+    <div class="benefit">
+      <h3>Premium Fabrics</h3>
+      <p>Selected materials chosen for comfort, structure, and longevity.</p>
+    </div>
+    <div class="benefit">
+      <h3>Clear Guidance</h3>
+      <p>Detailed fit and product information that reduces uncertainty.</p>
+    </div>
+    <div class="benefit">
+      <h3>Easy Experience</h3>
+      <p>Simple browsing, clean navigation, and a smooth purchase flow.</p>
+    </div>
+  </section>
+
+  <footer id="contact" class="footer">
+    <p><strong>Nordisk Sartoria</strong></p>
+    <p>Copenhagen, Denmark</p>
+    <p>Email: contact@nordisksartoria.dk</p>
+  </footer>
+
+  <div id="authModal" class="modal">
+    <div class="modal-content">
+      <span class="close-btn" id="closeAuth">&times;</span>
+      <h2>Account</h2>
+
+      <form id="signupForm" class="auth-form">
+        <h3>Create account</h3>
+        <label for="signupEmail">Email</label>
+        <input type="email" id="signupEmail" required>
+
+        <label for="signupPassword">Password</label>
+        <input type="password" id="signupPassword" minlength="6" required>
+
+        <button type="submit" class="btn btn-primary login-submit">Sign up</button>
+      </form>
+
+      <form id="loginForm" class="auth-form">
+        <h3>Log in</h3>
+        <label for="loginEmail">Email</label>
+        <input type="email" id="loginEmail" required>
+
+        <label for="loginPassword">Password</label>
+        <input type="password" id="loginPassword" required>
+
+        <button type="submit" class="btn btn-primary login-submit">Log in</button>
+      </form>
+
+      <p id="authMessage"></p>
+    </div>
+  </div>
+
+  <script type="module" src="main.js"></script>
+</body>
+</html>        <h3>Como Sand Suit</h3>
         <p class="product-description">Lightweight suit in breathable fabric for spring and summer events.</p>
         <p class="price">3.299 DKK</p>
         <button class="protected-btn">View Product</button>
