@@ -1,74 +1,24 @@
 import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
 
 const supabaseUrl = "https://izkoncmjtevgzhkvjxjo.supabase.co";
-const supabaseKey = "sb_publishable_ADuhyroHDg6pDq170WrBGA_i-KJUhDu";
+const supabaseKey = "REPLACE_WITH_YOUR_NEW_PUBLISHABLE_KEY";
+export const supabase = createClient(supabaseUrl, supabaseKey);
 
-const supabase = createClient(supabaseUrl, supabaseKey);
-
-const openAuth = document.getElementById("openAuth");
-const logoutBtn = document.getElementById("logoutBtn");
-const authModal = document.getElementById("authModal");
-const closeAuth = document.getElementById("closeAuth");
-const authMessage = document.getElementById("authMessage");
-const signupForm = document.getElementById("signupForm");
-const loginForm = document.getElementById("loginForm");
-const protectedButtons = document.querySelectorAll(".protected-btn");
-
-function setMessage(message, isError = false) {
-  authMessage.textContent = message;
-  authMessage.style.color = isError ? "#9b1c1c" : "green";
+export async function getSession() {
+  const {
+    data: { session }
+  } = await supabase.auth.getSession();
+  return session;
 }
 
-async function getCurrentUser() {
-  try {
-    const {
-      data: { user },
-      error
-    } = await supabase.auth.getUser();
-
-    if (error) {
-      console.error("getUser error:", error);
-      return null;
-    }
-
-    return user;
-  } catch (err) {
-    console.error("Unexpected getUser error:", err);
-    return null;
-  }
+export async function getCurrentUser() {
+  const session = await getSession();
+  return session?.user ?? null;
 }
 
-async function updateUI() {
-  try {
-    const {
-      data: { session },
-      error
-    } = await supabase.auth.getSession();
-
-    if (error) {
-      console.error("Session error:", error);
-    }
-
-    if (session) {
-      openAuth.textContent = session.user.email;
-      logoutBtn.style.display = "inline-block";
-
-      protectedButtons.forEach((button) => {
-        button.classList.remove("locked");
-        button.textContent = "View Product";
-      });
-    } else {
-      openAuth.textContent = "Login";
-      logoutBtn.style.display = "none";
-
-      protectedButtons.forEach((button) => {
-        button.classList.add("locked");
-        button.textContent = "Login to View";
-      });
-    }
-  } catch (err) {
-    console.error("updateUI error:", err);
-  }
+export function formatPrice(price) {
+  return `${price.toLocaleString("da-DK")} DKK`;
+}  }
 }
 
 openAuth.addEventListener("click", (e) => {
