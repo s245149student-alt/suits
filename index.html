@@ -19,7 +19,15 @@
         <li><a href="account.html">Account</a></li>
         <li><a href="cart.html">Cart</a></li>
         <li><a href="#contact">Contact</a></li>
-        <li><a href="#" id="openAuth">Login</a></li>
+        <li>
+  <a
+    href="#"
+    id="openAuth"
+    onclick="event.preventDefault(); document.getElementById('authModal').style.display='flex';"
+  >
+    Login
+  </a>
+</li>
         <li><a href="#" id="logoutBtn" style="display: none;">Logout</a></li>
       </ul>
     </nav>
