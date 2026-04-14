@@ -15,6 +15,7 @@ function setMessage(message, isError = false) {
 
 async function updateNav() {
   const user = await getCurrentUser();
+
   if (user) {
     openAuth.textContent = user.email;
     logoutBtn.style.display = "inline-block";
@@ -44,10 +45,12 @@ window.addEventListener("click", (e) => {
 
 signupForm?.addEventListener("submit", async (e) => {
   e.preventDefault();
+
   const email = document.getElementById("signupEmail").value.trim();
   const password = document.getElementById("signupPassword").value.trim();
 
   const { data, error } = await supabase.auth.signUp({ email, password });
+
   if (error) {
     setMessage(error.message, true);
     return;
@@ -63,10 +66,12 @@ signupForm?.addEventListener("submit", async (e) => {
 
 loginForm?.addEventListener("submit", async (e) => {
   e.preventDefault();
+
   const email = document.getElementById("loginEmail").value.trim();
   const password = document.getElementById("loginPassword").value.trim();
 
   const { error } = await supabase.auth.signInWithPassword({ email, password });
+
   if (error) {
     setMessage(error.message, true);
     return;
@@ -74,9 +79,25 @@ loginForm?.addEventListener("submit", async (e) => {
 
   authModal.style.display = "none";
   loginForm.reset();
+  setMessage("");
   await updateNav();
 });
 
+logoutBtn?.addEventListener("click", async (e) => {
+  e.preventDefault();
+
+  const { error } = await supabase.auth.signOut();
+
+  if (error) {
+    setMessage(error.message, true);
+    return;
+  }
+
+  await updateNav();
+});
+
+supabase.auth.onAuthStateChange(() => updateNav());
+updateNav();
 logoutBtn?.addEventListener("click", async (e) => {
   e.preventDefault();
   await supabase.auth.signOut();
