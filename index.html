@@ -1,37 +1,81 @@
-  <div id="authModal" class="modal">
-    <div class="modal-content">
-      <span class="close-btn" id="closeAuth">&times;</span>
-      <h2>Account</h2>
-
-      <form id="signupForm" class="auth-form">
-        <h3>Create account</h3>
-        <label for="signupEmail">Email</label>
-        <input type="email" id="signupEmail" required>
-
-        <label for="signupPassword">Password</label>
-        <input type="password" id="signupPassword" minlength="6" required>
-
-        <button type="submit" class="btn btn-primary login-submit">Sign up</button>
-      </form>
-
-      <form id="loginForm" class="auth-form">
-        <h3>Log in</h3>
-        <label for="loginEmail">Email</label>
-        <input type="email" id="loginEmail" required>
-
-        <label for="loginPassword">Password</label>
-        <input type="password" id="loginPassword" required>
-
-        <button type="submit" class="btn btn-primary login-submit">Log in</button>
-      </form>
-
-      <p id="authMessage"></p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nordisk Sartoria</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="logo">
+      <a href="index.html" style="color: inherit; text-decoration: none;">Nordisk Sartoria</a>
     </div>
-  </div>
+    <nav>
+      <ul class="nav-links">
+        <li><a href="#collection">Collection</a></li>
+        <li><a href="#fit-guide">Fit Guide</a></li>
+        <li><a href="#story">Our Story</a></li>
+        <li><a href="account.html">Account</a></li>
+        <li><a href="cart.html">Cart</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <li><a href="#" id="openAuth">Login</a></li>
+        <li><a href="#" id="logoutBtn" style="display: none;">Logout</a></li>
+      </ul>
+    </nav>
+  </header>
 
-  <script type="module" src="main.js"></script>
-</body>
-</html>        <a href="product.html?slug=como-sand-suit" class="product-link btn-dark">View Product</a>
+  <section class="hero">
+    <div class="hero-content">
+      <p class="eyebrow">Italian craftsmanship. Scandinavian simplicity.</p>
+      <h1>Timeless Italian Suits for the Modern Gentleman</h1>
+      <p>
+        Discover premium Italian suits designed with sharp tailoring,
+        refined fabrics, and effortless elegance.
+      </p>
+      <div class="hero-buttons">
+        <a href="#collection" class="btn btn-primary">Shop Suits</a>
+        <a href="#fit-guide" class="btn btn-secondary">Find Your Fit</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="intro">
+    <div class="intro-text">
+      <h2>Confidence starts with the right suit</h2>
+      <p>
+        Buying a suit online can feel uncertain. Nordisk Sartoria makes it easier
+        with clear guidance, premium materials, and a focused selection of
+        Italian tailoring with a Scandinavian touch.
+      </p>
+    </div>
+  </section>
+
+  <section id="collection" class="products">
+    <h2>Featured Collection</h2>
+    <div class="product-grid">
+      <article class="product-card">
+        <img src="https://xcdn.next.co.uk/common/items/default/default/itemimages/3_4Ratio/product/lge/Q76885s.jpg" alt="Milano Navy Suit">
+        <h3>Milano Navy Suit</h3>
+        <p class="product-description">Slim fit, wool blend, ideal for business and formal occasions.</p>
+        <p class="price">3.499 DKK</p>
+        <a href="product.html?slug=milano-navy-suit" class="product-link btn-dark">View Product</a>
+      </article>
+
+      <article class="product-card">
+        <img src="https://images.unsplash.com/photo-1617127365659-c47fa864d8bc?auto=format&fit=crop&w=900&q=80" alt="Torino Charcoal Suit">
+        <h3>Torino Charcoal Suit</h3>
+        <p class="product-description">Classic tailored silhouette with a soft structured shoulder.</p>
+        <p class="price">3.799 DKK</p>
+        <a href="product.html?slug=torino-charcoal-suit" class="product-link btn-dark">View Product</a>
+      </article>
+
+      <article class="product-card">
+        <img src="https://images.unsplash.com/photo-1594938328870-9623159c8c99?auto=format&fit=crop&w=900&q=80" alt="Como Sand Suit">
+        <h3>Como Sand Suit</h3>
+        <p class="product-description">Lightweight suit in breathable fabric for spring and summer events.</p>
+        <p class="price">3.299 DKK</p>
+        <a href="product.html?slug=como-sand-suit" class="product-link btn-dark">View Product</a>
       </article>
     </div>
   </section>
@@ -77,6 +121,47 @@
       <p>Simple browsing, clean navigation, and a smooth purchase flow.</p>
     </div>
   </section>
+
+  <footer id="contact" class="footer">
+    <p><strong>Nordisk Sartoria</strong></p>
+    <p>Copenhagen, Denmark</p>
+    <p>Email: contact@nordisksartoria.dk</p>
+  </footer>
+
+  <div id="authModal" class="modal">
+    <div class="modal-content">
+      <span class="close-btn" id="closeAuth">&times;</span>
+      <h2>Account</h2>
+
+      <form id="signupForm" class="auth-form">
+        <h3>Create account</h3>
+        <label for="signupEmail">Email</label>
+        <input type="email" id="signupEmail" required>
+
+        <label for="signupPassword">Password</label>
+        <input type="password" id="signupPassword" minlength="6" required>
+
+        <button type="submit" class="btn btn-primary login-submit">Sign up</button>
+      </form>
+
+      <form id="loginForm" class="auth-form">
+        <h3>Log in</h3>
+        <label for="loginEmail">Email</label>
+        <input type="email" id="loginEmail" required>
+
+        <label for="loginPassword">Password</label>
+        <input type="password" id="loginPassword" required>
+
+        <button type="submit" class="btn btn-primary login-submit">Log in</button>
+      </form>
+
+      <p id="authMessage"></p>
+    </div>
+  </div>
+
+  <script type="module" src="main.js"></script>
+</body>
+</html>  </section>
 
   <footer id="contact" class="footer">
     <p><strong>Nordisk Sartoria</strong></p>
