@@ -8,6 +8,9 @@ const authMessage = document.getElementById("authMessage");
 const signupForm = document.getElementById("signupForm");
 const loginForm = document.getElementById("loginForm");
 
+console.log("main.js loaded");
+console.log({ openAuth, logoutBtn, authModal, closeAuth, authMessage, signupForm, loginForm });
+
 function setMessage(message, isError = false) {
   if (!authMessage) return;
   authMessage.textContent = message;
