@@ -413,3 +413,36 @@ img {
     grid-template-columns: 1fr;
   }
 }
+
+.fit-assistant-page {
+  max-width: 800px;
+  margin: 60px auto;
+  padding: 20px;
+}
+
+.fit-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-top: 25px;
+}
+
+.fit-form label {
+  font-weight: bold;
+}
+
+.fit-form input,
+.fit-form select {
+  padding: 12px;
+  border: 1px solid #ccc;
+  font-family: inherit;
+  font-size: 1rem;
+}
+
+.fit-result {
+  margin-top: 25px;
+  padding: 15px;
+  background-color: #f7f4ef;
+  border-left: 4px solid #1f1f1f;
+  font-weight: bold;
+}
