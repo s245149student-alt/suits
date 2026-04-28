@@ -1,40 +1,58 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Fit Assistant | Nordisk Sartoria</title>
-  <link rel="stylesheet" href="style.css">
-</head>
+<script>
+  function showFitResult() {
+    const bodyShape = document.getElementById("body-shape").value;
+    const fitStyle = document.getElementById("fit-style").value;
+    const height = Number(document.getElementById("height").value);
+    const weight = Number(document.getElementById("weight").value);
+    const result = document.getElementById("fit-result");
 
-<body>
+    if (!bodyShape || !fitStyle || !height || !weight) {
+      result.innerHTML = "Please choose body shape, preferred fit, height and weight.";
+      return;
+    }
 
-  <header>
-    <nav>
-      <h1>Nordisk Sartoria</h1>
-      <a href="index.html">Home</a>
-      <a href="account.html">Account</a>
-      <a href="cart.html">Cart</a>
-    </nav>
-  </header>
+    let size;
 
-  <main class="fit-assistant-page">
+    if (weight < 60) {
+      size = 40;
+    } else if (weight < 67) {
+      size = 42;
+    } else if (weight < 74) {
+      size = 44;
+    } else if (weight < 82) {
+      size = 46;
+    } else if (weight < 90) {
+      size = 48;
+    } else {
+      size = 50;
+    }
 
-    <section class="fit-box">
-      <h2>Fit Assistant</h2>
-      <p>
-        Answer a few simple questions to find the suit fit that matches your body type,
-        style preference, and comfort needs.
-      </p>
+    if (height > 185 && size < 50) {
+      size += 2;
+    }
 
-      <form class="fit-form">
+    if (bodyShape === "broad" && size < 50) {
+      size += 2;
+    }
 
-        <label for="body-shape">Body shape</label>
-        <select id="body-shape" name="body-shape">
-          <option value="">Choose body shape</option>
-          <option value="slim">Slim</option>
-          <option value="regular">Regular</option>
-          <option value="broad">Broad shoulders</option>
+    if (fitStyle === "slim-fit" && size > 40) {
+      size -= 2;
+    }
+
+    if (size < 40) {
+      size = 40;
+    }
+
+    if (size > 50) {
+      size = 50;
+    }
+
+    result.innerHTML = `
+      Recommended size: <strong>${size}</strong><br>
+      Recommended fit: <strong>${fitStyle.replace("-", " ")}</strong>
+    `;
+  }
+</script>          <option value="broad">Broad shoulders</option>
           <option value="athletic">Athletic</option>
         </select>
 
