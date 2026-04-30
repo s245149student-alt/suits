@@ -1,38 +1,16 @@
-import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
-
-const supabaseUrl = "https://izkoncmjtevgzhkvjxjo.supabase.co";
-const supabaseKey = "sb_publishable_ADuhyroHDg6pDq170WrBGA_i-KJUhDu";
-
-export const supabase = createClient(supabaseUrl, supabaseKey);
-
-export async function getSession() {
-  const {
-    data: { session },
-    error
-  } = await supabase.auth.getSession();
-
-  if (error) {
-    console.error("Session error:", error);
-    return null;
-  }
-
-  return session;
-}
-
 export async function getCurrentUser() {
-  const {
-    data: { user },
-    error
-  } = await supabase.auth.getUser();
+  try {
+    const response = await fetch("/api/me");
+    const data = await response.json();
 
-  if (error) {
+    return data.user ?? null;
+  } catch (error) {
     console.error("Get user error:", error);
     return null;
   }
-
-  return user ?? null;
 }
 
 export function formatPrice(price) {
-  return `${price.toLocaleString("da-DK")} DKK`;
+  return `${Number(price).toLocaleString("da-DK")} DKK`;
+}  return `${price.toLocaleString("da-DK")} DKK`;
 }
