@@ -6,6 +6,7 @@ app = Flask(__name__)
 app.secret_key = "change-this-secret-key"
 
 DATABASE = "database.db"
+PORT_NUMBER = 6400
 
 
 def get_db_connection():
@@ -270,15 +271,6 @@ def me():
     return jsonify({"user": user})
 
 
-@app.route("/api/products", methods=["GET"])
-def get_products():
-    conn = get_db_connection()
-    products = conn.execute("SELECT * FROM products").fetchall()
-    conn.close()
-
-    return jsonify([row_to_dict(product) for product in products])
-
-
 @app.route("/api/product/<slug>", methods=["GET"])
 def get_product(slug):
     conn = get_db_connection()
@@ -514,4 +506,4 @@ def save_profile():
 init_db()
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5001, debug=True)
+    app.run(host="130.225.170.248", port=PORT_NUMBER)
