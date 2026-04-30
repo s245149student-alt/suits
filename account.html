@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Account | Nordisk Sartoria</title>
-  <link rel="stylesheet" href="/static/styles.css">
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
   <header class="topbar">
@@ -48,7 +48,7 @@
   </main>
 
   <script type="module">
-    import { formatPrice } from "/static/script.js";
+    import { formatPrice } from "{{ url_for('static', filename='script.js') }}";
 
     const profileForm = document.getElementById("profileForm");
     const fullName = document.getElementById("fullName");
@@ -88,6 +88,7 @@
       } catch (error) {
         profileMessage.textContent = "Could not connect to backend.";
         profileMessage.style.color = "#9b1c1c";
+        ordersList.innerHTML = "<li>Could not load orders.</li>";
         console.error(error);
       }
     }
@@ -117,6 +118,8 @@
 
         profileMessage.textContent = "Profile updated.";
         profileMessage.style.color = "green";
+
+        loadProfile();
 
       } catch (error) {
         profileMessage.textContent = "Could not connect to backend.";
