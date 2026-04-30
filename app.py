@@ -190,7 +190,7 @@ def init_db():
 
     cursor.execute("""
         UPDATE ns_products
-        SET side_image_url = '/static/images/suit.sand.side.jpg'
+        SET side_image_url = '/static/images/suit.sand.side.jpeg'
         WHERE slug = 'como-sand-suit'
     """)
 
