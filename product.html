@@ -8,7 +8,10 @@
 </head>
 <body>
   <header class="topbar">
-    <div class="logo"><a href="index.html" style="color:inherit;text-decoration:none;">Nordisk Sartoria</a></div>
+    <div class="logo">
+      <a href="index.html" style="color:inherit;text-decoration:none;">Nordisk Sartoria</a>
+    </div>
+
     <nav>
       <ul class="nav-links">
         <li><a href="index.html#collection">Collection</a></li>
@@ -23,18 +26,109 @@
   </main>
 
   <script type="module">
-    import { supabase, getCurrentUser, formatPrice } from './script.js';
+    import { formatPrice } from "./script.js";
 
-    const root = document.getElementById('productView');
+    const root = document.getElementById("productView");
     const params = new URLSearchParams(window.location.search);
-    const slug = params.get('slug');
+    const slug = params.get("slug");
+
+    let currentProduct = null;
 
     async function loadProduct() {
-      const { data: product, error } = await supabase
-        .from('products')
-        .select('*')
-        .eq('slug', slug)
-        .single();
+      try {
+        const response = await fetch(`/api/product/${slug}`);
+        const product = await response.json();
+
+        if (!response.ok || product.error) {
+          root.innerHTML = "<p>Product not found.</p>";
+          return;
+        }
+
+        currentProduct = product;
+
+        root.innerHTML = `
+          <div class="card">
+            <img src="${product.image_url}" alt="${product.name}">
+          </div>
+
+          <div class="card">
+            <p class="muted">${product.category ?? ""}</p>
+            <h1>${product.name}</h1>
+            <p class="price">${formatPrice(product.price)}</p>
+            <p>${product.description ?? ""}</p>
+
+            <div class="form-group space-top">
+              <label for="size">Size</label>
+              <select id="size">
+                <option>Male 40</option>
+                <option>Male 42</option>
+                <option>Male 44</option>
+                <option>Male 46</option>
+                <option>Male 48</option>
+                <option>Male 50</option>
+                <option>Female 40</option>
+                <option>Female 42</option>
+                <option>Female 44</option>
+                <option>Female 46</option>
+                <option>Female 48</option>
+                <option>Female 50</option>
+              </select>
+            </div>
+
+            <div class="inline-row">
+              <button id="addToCartBtn" class="btn-dark">Add to Cart</button>
+            </div>
+
+            <p id="productMessage" class="space-top"></p>
+          </div>
+        `;
+
+        document
+          .getElementById("addToCartBtn")
+          .addEventListener("click", addToCart);
+
+      } catch (error) {
+        root.innerHTML = "<p>Could not load product.</p>";
+        console.error(error);
+      }
+    }
+
+    async function addToCart() {
+      const message = document.getElementById("productMessage");
+
+      try {
+        const response = await fetch("/api/cart", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            product_id: currentProduct.id
+          })
+        });
+
+        const result = await response.json();
+
+        if (!response.ok || result.error) {
+          message.textContent = result.error || "Could not add product to cart.";
+          message.style.color = "#9b1c1c";
+          return;
+        }
+
+        message.textContent = "Added to cart.";
+        message.style.color = "green";
+
+      } catch (error) {
+        message.textContent = "Could not connect to backend.";
+        message.style.color = "#9b1c1c";
+        console.error(error);
+      }
+    }
+
+    loadProduct();
+  </script>
+</body>
+</html>        .single();
 
       if (error || !product) {
         root.innerHTML = '<p>Product not found.</p>';
