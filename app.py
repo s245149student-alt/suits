@@ -161,7 +161,7 @@ def init_db():
             "Suit",
             3299.00,
             "Lightweight suit in breathable fabric for spring and summer events.",
-            "/static/images/suit.sand.side.jpg"
+            "/static/images/suit.sand.side.jpeg"
         )
     ]
 
