@@ -12,5 +12,4 @@ export async function getCurrentUser() {
 
 export function formatPrice(price) {
   return `${Number(price).toLocaleString("da-DK")} DKK`;
-}  return `${price.toLocaleString("da-DK")} DKK`;
 }
