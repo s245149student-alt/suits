@@ -8,7 +8,10 @@
 </head>
 <body>
   <header class="topbar">
-    <div class="logo"><a href="index.html" style="color:inherit;text-decoration:none;">Nordisk Sartoria</a></div>
+    <div class="logo">
+      <a href="index.html" style="color:inherit;text-decoration:none;">Nordisk Sartoria</a>
+    </div>
+
     <nav>
       <ul class="nav-links">
         <li><a href="index.html#collection">Collection</a></li>
@@ -21,15 +24,18 @@
   <main class="page-container two-col">
     <section class="card">
       <h1>My Account</h1>
+
       <form id="profileForm">
         <div class="form-group">
           <label for="fullName">Full name</label>
           <input type="text" id="fullName">
         </div>
+
         <div class="form-group">
           <label for="phone">Phone</label>
           <input type="text" id="phone">
         </div>
+
         <button class="btn-dark" type="submit">Save Profile</button>
         <p id="profileMessage" class="space-top"></p>
       </form>
@@ -42,70 +48,81 @@
   </main>
 
   <script type="module">
-    import { supabase, getCurrentUser, formatPrice } from './script.js';
+    import { formatPrice } from "./script.js";
 
-    const profileForm = document.getElementById('profileForm');
-    const fullName = document.getElementById('fullName');
-    const phone = document.getElementById('phone');
-    const profileMessage = document.getElementById('profileMessage');
-    const ordersList = document.getElementById('ordersList');
+    const profileForm = document.getElementById("profileForm");
+    const fullName = document.getElementById("fullName");
+    const phone = document.getElementById("phone");
+    const profileMessage = document.getElementById("profileMessage");
+    const ordersList = document.getElementById("ordersList");
 
     async function loadProfile() {
-      const user = await getCurrentUser();
-      if (!user) {
-        profileMessage.textContent = 'You must log in first.';
-        profileMessage.style.color = '#9b1c1c';
-        return;
-      }
+      try {
+        const response = await fetch("/api/profile");
+        const result = await response.json();
 
-      const { data: profile } = await supabase
-        .from('profiles')
-        .select('*')
-        .eq('id', user.id)
-        .maybeSingle();
+        if (!response.ok || result.error) {
+          profileMessage.textContent = result.error || "Could not load profile.";
+          profileMessage.style.color = "#9b1c1c";
+          ordersList.innerHTML = "<li>Log in to see your orders.</li>";
+          return;
+        }
 
-      if (profile) {
-        fullName.value = profile.full_name ?? '';
-        phone.value = profile.phone ?? '';
-      }
+        if (result.profile) {
+          fullName.value = result.profile.full_name ?? "";
+          phone.value = result.profile.phone ?? "";
+        }
 
-      const { data: orders } = await supabase
-        .from('orders')
-        .select('*')
-        .eq('user_id', user.id)
-        .order('created_at', { ascending: false });
+        if (!result.orders || !result.orders.length) {
+          ordersList.innerHTML = "<li>No orders yet.</li>";
+        } else {
+          ordersList.innerHTML = result.orders.map((order) => `
+            <li>
+              <strong>Order #${order.id}</strong><br>
+              ${formatPrice(order.total_amount)} — ${order.status}<br>
+              <span class="muted">${order.created_at}</span>
+            </li>
+          `).join("");
+        }
 
-      if (!orders?.length) {
-        ordersList.innerHTML = '<li>No orders yet.</li>';
-      } else {
-        ordersList.innerHTML = orders.map((order) => `
-          <li>
-            <strong>Order #${order.id}</strong><br>
-            ${formatPrice(order.total_amount)} — ${order.status}
-          </li>
-        `).join('');
+      } catch (error) {
+        profileMessage.textContent = "Could not connect to backend.";
+        profileMessage.style.color = "#9b1c1c";
+        console.error(error);
       }
     }
 
-    profileForm.addEventListener('submit', async (e) => {
+    profileForm.addEventListener("submit", async (e) => {
       e.preventDefault();
-      const user = await getCurrentUser();
-      if (!user) return;
 
-      const { error } = await supabase.from('profiles').upsert({
-        id: user.id,
-        full_name: fullName.value.trim(),
-        phone: phone.value.trim()
-      });
+      try {
+        const response = await fetch("/api/profile", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            full_name: fullName.value.trim(),
+            phone: phone.value.trim()
+          })
+        });
 
-      if (error) {
-        profileMessage.textContent = error.message;
-        profileMessage.style.color = '#9b1c1c';
-        return;
+        const result = await response.json();
+
+        if (!response.ok || result.error) {
+          profileMessage.textContent = result.error || "Could not save profile.";
+          profileMessage.style.color = "#9b1c1c";
+          return;
+        }
+
+        profileMessage.textContent = "Profile updated.";
+        profileMessage.style.color = "green";
+
+      } catch (error) {
+        profileMessage.textContent = "Could not connect to backend.";
+        profileMessage.style.color = "#9b1c1c";
+        console.error(error);
       }
-
-      profileMessage.textContent = 'Profile updated.';
-      profileMessage.style.color = 'green';
     });
 
     loadProfile();
