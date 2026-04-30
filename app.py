@@ -6,7 +6,7 @@ app = Flask(__name__)
 app.secret_key = "change-this-secret-key"
 
 DATABASE = "database.db"
-PORT_NUMBER = 6400
+PORT_NUMBER = 6408
 
 
 def get_db_connection():
@@ -506,4 +506,4 @@ def save_profile():
 init_db()
 
 if __name__ == "__main__":
-    app.run(host="130.225.170.248", port=PORT_NUMBER)
+    app.run(host="0.0.0.0", port=PORT_NUMBER)
