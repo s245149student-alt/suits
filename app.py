@@ -1,7 +1,6 @@
 from flask import Flask, request, jsonify, session, send_from_directory
 from werkzeug.security import generate_password_hash, check_password_hash
 import sqlite3
-import os
 
 app = Flask(__name__)
 app.secret_key = "change-this-secret-key"
@@ -50,7 +49,8 @@ def init_db():
             category TEXT,
             description TEXT,
             price INTEGER NOT NULL,
-            image_url TEXT
+            front_image_url TEXT,
+            side_image_url TEXT
         )
     """)
 
@@ -95,7 +95,8 @@ def init_db():
             "category": "Suit",
             "description": "Slim fit, wool blend, ideal for business and formal occasions.",
             "price": 3499,
-            "image_url": "images/suit.navy.front.jpeg"
+            "front_image_url": "images/suit.navy.front.jpeg",
+            "side_image_url": "images/suit.navy.side.jpeg"
         },
         {
             "slug": "torino-charcoal-suit",
@@ -103,7 +104,8 @@ def init_db():
             "category": "Suit",
             "description": "Classic tailored silhouette with a soft structured shoulder.",
             "price": 3799,
-            "image_url": "images/suit.sort.front.jpeg"
+            "front_image_url": "images/suit.sort.front.jpeg",
+            "side_image_url": "images/suit.sort.side.jpeg"
         },
         {
             "slug": "como-sand-suit",
@@ -111,22 +113,24 @@ def init_db():
             "category": "Suit",
             "description": "Lightweight suit in breathable fabric for spring and summer events.",
             "price": 3299,
-            "image_url": "images/suit.sand.front.jpeg"
+            "front_image_url": "images/suit.sand.front.jpeg",
+            "side_image_url": "images/suit.sand.side.jpeg"
         }
     ]
 
     for product in products:
         conn.execute("""
-            INSERT OR IGNORE INTO products 
-            (slug, name, category, description, price, image_url)
-            VALUES (?, ?, ?, ?, ?, ?)
+            INSERT OR IGNORE INTO products
+            (slug, name, category, description, price, front_image_url, side_image_url)
+            VALUES (?, ?, ?, ?, ?, ?, ?)
         """, (
             product["slug"],
             product["name"],
             product["category"],
             product["description"],
             product["price"],
-            product["image_url"]
+            product["front_image_url"],
+            product["side_image_url"]
         ))
 
     conn.commit()
@@ -491,6 +495,7 @@ def save_profile():
     return jsonify({"message": "Profile updated"})
 
 
+init_db()
+
 if __name__ == "__main__":
-    init_db()
-    app.run(debug=True)
+    app.run(host="0.0.0.0", port=5000, debug=True)
