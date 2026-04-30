@@ -4,21 +4,21 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Nordisk Sartoria</title>
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
   <header class="topbar">
     <div class="logo">
-      <a href="index.html" style="color: inherit; text-decoration: none;">Nordisk Sartoria</a>
+      <a href="/index.html" style="color: inherit; text-decoration: none;">Nordisk Sartoria</a>
     </div>
     <nav>
       <ul class="nav-links">
-        <li><a href="#collection">Collection</a></li>
-        <li><a href="#fit-guide">Fit Guide</a></li>
-        <li><a href="#story">Our Story</a></li>
-        <li><a href="account.html">Account</a></li>
-        <li><a href="cart.html">Cart</a></li>
-        <li><a href="#contact">Contact</a></li>
+        <li><a href="/index.html#collection">Collection</a></li>
+        <li><a href="/index.html#fit-guide">Fit Guide</a></li>
+        <li><a href="/index.html#story">Our Story</a></li>
+        <li><a href="/account.html">Account</a></li>
+        <li><a href="/cart.html">Cart</a></li>
+        <li><a href="/index.html#contact">Contact</a></li>
         <li><a href="#" id="openAuth">Login</a></li>
         <li><a href="#" id="logoutBtn" style="display: none;">Logout</a></li>
       </ul>
@@ -34,8 +34,8 @@
         refined fabrics, and effortless elegance.
       </p>
       <div class="hero-buttons">
-        <a href="#collection" class="btn btn-primary">Shop Suits</a>
-        <a href="#fit-guide" class="btn btn-secondary">Find Your Fit</a>
+        <a href="/index.html#collection" class="btn btn-primary">Shop Suits</a>
+        <a href="/index.html#fit-guide" class="btn btn-secondary">Find Your Fit</a>
       </div>
     </div>
   </section>
@@ -55,27 +55,27 @@
     <h2>Featured Collection</h2>
     <div class="product-grid">
       <article class="product-card">
-        <img src="images/suit.navy.front.jpeg" alt="Navy suit front">
+        <img src="{{ url_for('static', filename='images/suit.navy.front.jpeg') }}" alt="Navy suit front">
         <h3>Milano Navy Suit</h3>
         <p class="product-description">Slim fit, wool blend, ideal for business and formal occasions.</p>
         <p class="price">3.499 DKK</p>
-        <a href="product.html?slug=milano-navy-suit" class="product-link btn-dark">View Product</a>
+        <a href="/product.html?slug=milano-navy-suit" class="product-link btn-dark">View Product</a>
       </article>
 
       <article class="product-card">
-        <img src="images/suit.sort.front.jpeg" alt="Black suit front">
+        <img src="{{ url_for('static', filename='images/suit.sort.front.jpeg') }}" alt="Black suit front">
         <h3>Torino Charcoal Suit</h3>
         <p class="product-description">Classic tailored silhouette with a soft structured shoulder.</p>
         <p class="price">3.799 DKK</p>
-        <a href="product.html?slug=torino-charcoal-suit" class="product-link btn-dark">View Product</a>
+        <a href="/product.html?slug=torino-charcoal-suit" class="product-link btn-dark">View Product</a>
       </article>
 
       <article class="product-card">
-        <img src="images/suit.sand.front.jpeg" alt="Sand suit front">
+        <img src="{{ url_for('static', filename='images/suit.sand.front.jpeg') }}" alt="Sand suit front">
         <h3>Como Sand Suit</h3>
         <p class="product-description">Lightweight suit in breathable fabric for spring and summer events.</p>
         <p class="price">3.299 DKK</p>
-        <a href="product.html?slug=como-sand-suit" class="product-link btn-dark">View Product</a>
+        <a href="/product.html?slug=como-sand-suit" class="product-link btn-dark">View Product</a>
       </article>
     </div>
   </section>
@@ -92,7 +92,7 @@
         <li>See body-shape based recommendations</li>
         <li>Get help choosing the right size</li>
       </ul>
-      <a href="fit-assistant.html" class="btn btn-primary">Open Fit Assistant</a>
+      <a href="/fit-assistant.html" class="btn btn-primary">Open Fit Assistant</a>
     </div>
   </section>
 
@@ -159,6 +159,6 @@
     </div>
   </div>
 
-  <script type="module" src="main.js"></script>
+  <script type="module" src="{{ url_for('static', filename='main.js') }}"></script>
 </body>
 </html>
