@@ -1,22 +1,22 @@
-$<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Product | Nordisk Sartoria</title>
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="/static/styles.css">
 </head>
 <body>
   <header class="topbar">
     <div class="logo">
-      <a href="index.html" style="color:inherit;text-decoration:none;">Nordisk Sartoria</a>
+      <a href="/index.html" style="color:inherit;text-decoration:none;">Nordisk Sartoria</a>
     </div>
 
     <nav>
       <ul class="nav-links">
-        <li><a href="index.html#collection">Collection</a></li>
-        <li><a href="account.html">Account</a></li>
-        <li><a href="cart.html">Cart</a></li>
+        <li><a href="/index.html#collection">Collection</a></li>
+        <li><a href="/account.html">Account</a></li>
+        <li><a href="/cart.html">Cart</a></li>
       </ul>
     </nav>
   </header>
@@ -26,7 +26,7 @@ $<!DOCTYPE html>
   </main>
 
   <script type="module">
-    import { formatPrice } from "./script.js";
+    import { formatPrice } from "/static/script.js";
 
     const root = document.getElementById("productView");
     const params = new URLSearchParams(window.location.search);
