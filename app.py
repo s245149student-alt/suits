@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, session, send_from_directory
+from flask import Flask, request, jsonify, session, render_template
 from werkzeug.security import generate_password_hash, check_password_hash
 import sqlite3
 
@@ -95,8 +95,8 @@ def init_db():
             "category": "Suit",
             "description": "Slim fit, wool blend, ideal for business and formal occasions.",
             "price": 3499,
-            "front_image_url": "images/suit.navy.front.jpeg",
-            "side_image_url": "images/suit.navy.side.jpeg"
+            "front_image_url": "/static/images/suit.navy.front.jpeg",
+            "side_image_url": "/static/images/suit.navy.side.jpeg"
         },
         {
             "slug": "torino-charcoal-suit",
@@ -104,8 +104,8 @@ def init_db():
             "category": "Suit",
             "description": "Classic tailored silhouette with a soft structured shoulder.",
             "price": 3799,
-            "front_image_url": "images/suit.sort.front.jpeg",
-            "side_image_url": "images/suit.sort.side.jpeg"
+            "front_image_url": "/static/images/suit.sort.front.jpeg",
+            "side_image_url": "/static/images/suit.sort.side.jpeg"
         },
         {
             "slug": "como-sand-suit",
@@ -113,8 +113,8 @@ def init_db():
             "category": "Suit",
             "description": "Lightweight suit in breathable fabric for spring and summer events.",
             "price": 3299,
-            "front_image_url": "images/suit.sand.front.jpeg",
-            "side_image_url": "images/suit.sand.side.jpeg"
+            "front_image_url": "/static/images/suit.sand.front.jpeg",
+            "side_image_url": "/static/images/suit.sand.side.jpeg"
         }
     ]
 
@@ -154,13 +154,29 @@ def get_current_user():
 
 
 @app.route("/")
-def root():
-    return send_from_directory(".", "index.html")
+@app.route("/index.html")
+def index():
+    return render_template("index.html")
 
 
-@app.route("/<path:path>")
-def static_files(path):
-    return send_from_directory(".", path)
+@app.route("/product.html")
+def product_page():
+    return render_template("product.html")
+
+
+@app.route("/cart.html")
+def cart_page():
+    return render_template("cart.html")
+
+
+@app.route("/account.html")
+def account_page():
+    return render_template("account.html")
+
+
+@app.route("/fit-assistant.html")
+def fit_assistant_page():
+    return render_template("fit-assistant.html")
 
 
 @app.route("/api/signup", methods=["POST"])
