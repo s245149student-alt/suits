@@ -17,11 +17,11 @@ app.secret_key = "change_this_to_a_long_random_secret_key_64008"
 # IMPORTANT:
 # Replace these values with your own DTU database credentials.
 DB_CONFIG = {
-    "user": "YOUR_DB_USERNAME",
-    "password": "YOUR_DB_PASSWORD",
+    "user": "gb47",
+    "password": "gb47_DB_password",
     "host": "127.0.0.1",
     "port": 3306,
-    "database": "YOUR_DB_NAME"
+    "database": "gb47_DB"
 }
 
 
