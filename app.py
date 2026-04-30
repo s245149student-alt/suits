@@ -2,20 +2,17 @@ from flask import Flask, render_template, request, jsonify, session
 from werkzeug.security import generate_password_hash, check_password_hash
 from decimal import Decimal
 import mariadb
-import os
 
 
 app = Flask(__name__)
 
-# CHANGE THIS to a long random secret before final submission
-app.secret_key = "change_this_to_a_long_random_secret_key_64008"
+# Secret key for login sessions
+app.secret_key = "nordisk_sartoria_64008_secret_key"
 
 
 # ---------------------------------------------------------
 # DATABASE CONFIG
 # ---------------------------------------------------------
-# IMPORTANT:
-# Replace these values with your own DTU database credentials.
 DB_CONFIG = {
     "user": "gb47",
     "password": "gb47_DB_password",
@@ -148,7 +145,7 @@ def init_db():
             "Suit",
             3499.00,
             "Slim fit, wool blend, ideal for business and formal occasions.",
-            "/static/images/suit.navy.front.jpeg"
+            "/static/images/suit.navy.side.jpeg"
         ),
         (
             "torino-charcoal-suit",
@@ -156,7 +153,7 @@ def init_db():
             "Suit",
             3799.00,
             "Classic tailored silhouette with a soft structured shoulder.",
-            "/static/images/suit.sort.front.jpeg"
+            "/static/images/suit.sort.side.jpeg"
         ),
         (
             "como-sand-suit",
@@ -164,7 +161,7 @@ def init_db():
             "Suit",
             3299.00,
             "Lightweight suit in breathable fabric for spring and summer events.",
-            "/static/images/suit.sand.front.jpeg"
+            "/static/images/suit.sand.side.jpg"
         )
     ]
 
@@ -177,6 +174,25 @@ def init_db():
                 SELECT 1 FROM ns_products WHERE slug = ?
             )
         """, (*product, product[0]))
+
+    # Always update product page images to side images
+    cursor.execute("""
+        UPDATE ns_products
+        SET side_image_url = '/static/images/suit.navy.side.jpeg'
+        WHERE slug = 'milano-navy-suit'
+    """)
+
+    cursor.execute("""
+        UPDATE ns_products
+        SET side_image_url = '/static/images/suit.sort.side.jpeg'
+        WHERE slug = 'torino-charcoal-suit'
+    """)
+
+    cursor.execute("""
+        UPDATE ns_products
+        SET side_image_url = '/static/images/suit.sand.side.jpg'
+        WHERE slug = 'como-sand-suit'
+    """)
 
     conn.commit()
     conn.close()
@@ -470,7 +486,7 @@ def api_remove_cart_item(item_id):
 
 
 # ---------------------------------------------------------
-# PROFILE + ORDERS API
+# PROFILE API
 # ---------------------------------------------------------
 @app.route("/api/profile", methods=["GET"])
 def api_get_profile():
@@ -550,6 +566,9 @@ def api_update_profile():
     return jsonify({"message": "Profile updated."})
 
 
+# ---------------------------------------------------------
+# CHECKOUT API
+# ---------------------------------------------------------
 @app.route("/api/checkout", methods=["POST"])
 def api_checkout():
     user_id = current_user_id()
