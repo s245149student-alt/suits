@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Cart | Nordisk Sartoria</title>
-  <link rel="stylesheet" href="/static/styles.css">
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
   <header class="topbar">
@@ -36,7 +36,7 @@
   </main>
 
   <script type="module">
-    import { formatPrice } from "/static/script.js";
+    import { formatPrice } from "{{ url_for('static', filename='script.js') }}";
 
     const cartList = document.getElementById("cartList");
     const cartTotal = document.getElementById("cartTotal");
@@ -99,9 +99,20 @@
 
     async function removeCartItem(itemId) {
       try {
-        await fetch(`/api/cart/${itemId}`, {
+        const response = await fetch(`/api/cart/${itemId}`, {
           method: "DELETE"
         });
+
+        const result = await response.json();
+
+        if (!response.ok || result.error) {
+          cartMessage.textContent = result.error || "Could not remove item.";
+          cartMessage.style.color = "#9b1c1c";
+          return;
+        }
+
+        cartMessage.textContent = "Item removed.";
+        cartMessage.style.color = "green";
 
         loadCart();
 
