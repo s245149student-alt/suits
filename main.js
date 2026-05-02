@@ -17,16 +17,22 @@ function setMessage(message, isError = false) {
 
 async function updateNav() {
   const user = await getCurrentUser();
+
   const accountNav = document.getElementById("accountNav");
+  const cartNav = document.getElementById("cartNav");
 
   if (user) {
     if (openAuth) openAuth.textContent = user.email;
     if (logoutBtn) logoutBtn.style.display = "inline-block";
+
     if (accountNav) accountNav.style.display = "list-item";
+    if (cartNav) cartNav.style.display = "list-item";
   } else {
     if (openAuth) openAuth.textContent = "Login";
     if (logoutBtn) logoutBtn.style.display = "none";
+
     if (accountNav) accountNav.style.display = "none";
+    if (cartNav) cartNav.style.display = "none";
   }
 }
 
