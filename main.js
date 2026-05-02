@@ -22,13 +22,17 @@ async function updateNav() {
   const cartNav = document.getElementById("cartNav");
 
   if (user) {
-    if (openAuth) openAuth.textContent = user.email;
+    if (openAuth) openAuth.style.display = "none";
     if (logoutBtn) logoutBtn.style.display = "inline-block";
 
     if (accountNav) accountNav.style.display = "list-item";
     if (cartNav) cartNav.style.display = "list-item";
   } else {
-    if (openAuth) openAuth.textContent = "Login";
+    if (openAuth) {
+      openAuth.textContent = "Login";
+      openAuth.style.display = "inline-block";
+    }
+
     if (logoutBtn) logoutBtn.style.display = "none";
 
     if (accountNav) accountNav.style.display = "none";
