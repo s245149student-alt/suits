@@ -9,10 +9,6 @@ app = Flask(__name__)
 # Secret key for login sessions
 app.secret_key = "nordisk_sartoria_64008_secret_key"
 
-
-# ---------------------------------------------------------
-# DATABASE CONFIG
-# ---------------------------------------------------------
 DB_CONFIG = {
     "user": "gb47",
     "password": "gb47_DB_password",
@@ -63,10 +59,6 @@ def money(value):
 def current_user_id():
     return session.get("user_id")
 
-
-# ---------------------------------------------------------
-# DATABASE SETUP
-# ---------------------------------------------------------
 def init_db():
     conn = get_db_connection()
     cursor = conn.cursor()
@@ -175,7 +167,6 @@ def init_db():
             )
         """, (*product, product[0]))
 
-    # Always update product page images to side images
     cursor.execute("""
         UPDATE ns_products
         SET side_image_url = '/static/images/suit.navy.side.jpeg'
@@ -197,10 +188,6 @@ def init_db():
     conn.commit()
     conn.close()
 
-
-# ---------------------------------------------------------
-# PAGE ROUTES
-# ---------------------------------------------------------
 @app.route("/")
 @app.route("/index.html")
 def index_page():
@@ -226,10 +213,6 @@ def account_page():
 def fit_assistant_page():
     return render_template("fit-assistant.html")
 
-
-# ---------------------------------------------------------
-# AUTH API
-# ---------------------------------------------------------
 @app.route("/api/signup", methods=["POST"])
 def api_signup():
     data = request.get_json(silent=True) or {}
@@ -323,10 +306,6 @@ def api_me():
         }
     })
 
-
-# ---------------------------------------------------------
-# PRODUCT API
-# ---------------------------------------------------------
 @app.route("/api/products", methods=["GET"])
 def api_products():
     rows = query_all("""
@@ -374,10 +353,6 @@ def api_product(slug):
 
     return jsonify(product)
 
-
-# ---------------------------------------------------------
-# CART API
-# ---------------------------------------------------------
 @app.route("/api/cart", methods=["GET"])
 def api_get_cart():
     user_id = current_user_id()
@@ -484,10 +459,6 @@ def api_remove_cart_item(item_id):
 
     return jsonify({"message": "Item removed."})
 
-
-# ---------------------------------------------------------
-# PROFILE API
-# ---------------------------------------------------------
 @app.route("/api/profile", methods=["GET"])
 def api_get_profile():
     user_id = current_user_id()
@@ -565,10 +536,6 @@ def api_update_profile():
 
     return jsonify({"message": "Profile updated."})
 
-
-# ---------------------------------------------------------
-# CHECKOUT API
-# ---------------------------------------------------------
 @app.route("/api/checkout", methods=["POST"])
 def api_checkout():
     user_id = current_user_id()
@@ -636,10 +603,6 @@ def api_checkout():
         conn.close()
         return jsonify({"error": f"Checkout failed: {error}"}), 500
 
-
-# ---------------------------------------------------------
-# START APP
-# ---------------------------------------------------------
 PORT_NUMBER = 64008
 
 if __name__ == "__main__":
